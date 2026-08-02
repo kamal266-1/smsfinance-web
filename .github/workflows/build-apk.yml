@@ -107,7 +107,7 @@ jobs:
               <application
                   android:allowBackup="true"
                   android:label="SmsFinance"
-                  android:theme="@android:style/Theme.DeviceDefault.Light.NoActionBar">
+                  android:theme="@style/Theme.AppCompat.Light.NoActionBar">
                   <activity
                       android:exported="true"
                       android:name=".MainActivity">
@@ -148,11 +148,11 @@ jobs:
           }
           EOF
           
-          # Create strings.xml
-          cat > android/app/src/main/res/values/strings.xml << 'EOF'
+          # Create styles.xml
+          cat > android/app/src/main/res/values/styles.xml << 'EOF'
           <?xml version="1.0" encoding="utf-8"?>
           <resources>
-              <string name="app_name">SmsFinance</string>
+              <style name="Theme.SmsFinance" parent="Theme.AppCompat.Light.NoActionBar" />
           </resources>
           EOF
           
