@@ -29,10 +29,11 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Install Gradle
+      - name: Install Gradle 8.11.1
         run: |
-          sudo apt-get update
-          sudo apt-get install -y gradle
+          curl -sL https://services.gradle.org/distributions/gradle-8.11.1-bin.zip -o /tmp/gradle.zip
+          sudo unzip -q /tmp/gradle.zip -d /opt/gradle
+          echo "/opt/gradle/gradle-8.11.1/bin" >> $GITHUB_PATH
 
       - name: Create Android WebView wrapper
         run: |
@@ -58,9 +59,9 @@ jobs:
                       android:exported="true"
                       android:name=".MainActivity">
                       <intent-filter>
-                          <action android:name="android.intent.action.MAIN" />
-                          <category android:name="android.intent.category.LAUNCHER" />
-                      </intent-filter>
+                                  <action android:name="android.intent.action.MAIN" />
+                                  <category android:name="android.intent.category.LAUNCHER" />
+                              </intent-filter>
                   </activity>
               </application>
           </manifest>
