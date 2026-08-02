@@ -208,6 +208,13 @@ jobs:
           }
           EOF
           
+          # Create gradle.properties
+          cat > android/gradle.properties << 'EOF'
+          android.useAndroidX=true
+          android.enableJetifier=true
+          org.gradle.jvmargs=-Xmx2048m
+          EOF
+          
           echo "Android project created successfully"
 
       - name: Build Debug APK
