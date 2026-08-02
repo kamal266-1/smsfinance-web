@@ -38,9 +38,9 @@ jobs:
 
       - name: Install Gradle 7.5.1
         run: |
-          curl -sL https://services.gradle.org/distributions/gradle-7.5.1-bin.zip -o /tmp/gradle.zip
+          curl -sL https://services.gradle.org/distributions/gradle-8.5-bin.zip -o /tmp/gradle.zip
           sudo unzip -q /tmp/gradle.zip -d /opt/gradle
-          echo "/opt/gradle/gradle-7.5.1/bin" >> $GITHUB_PATH
+          echo "/opt/gradle/gradle-8.5/bin" >> $GITHUB_PATH
 
       - name: Create Android WebView wrapper
         run: |
@@ -81,8 +81,8 @@ jobs:
                   maven { url "https://maven.google.com" }
               }
               dependencies {
-                  classpath "com.android.tools.build:gradle:7.4.2"
-                  classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.22"
+                  classpath "com.android.tools.build:gradle:8.2.0"
+                  classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.22"
               }
           }
           
@@ -197,6 +197,8 @@ jobs:
               }
           
               kotlinOptions {
+                  languageVersion = "1.9"
+                  apiVersion = "1.9"
                   jvmTarget = "17"
               }
           }
