@@ -142,10 +142,8 @@ jobs:
           
           # Create app build.gradle.kts
           cat > android/app/build.gradle.kts << 'EOF'
-          plugins {
-              id("com.android.application")
-              id("org.jetbrains.kotlin.android")
-          }
+          apply(plugin = "com.android.application")
+          apply(plugin = "org.jetbrains.kotlin.android")
           
           android {
               namespace = "com.kamal.smsfinance.web"
