@@ -1,0 +1,6 @@
+{
+  "name": "SmsFinance",
+  "description": "Fast, offline-first personal finance manager based on bank SMS messages with explainable rule engine, cash flow insights, and Google Drive backup.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
