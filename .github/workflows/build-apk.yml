@@ -38,9 +38,9 @@ jobs:
 
       - name: Install Gradle 8.11.1
         run: |
-          curl -sL https://services.gradle.org/distributions/gradle-8.11.1-bin.zip -o /tmp/gradle.zip
+          curl -sL https://services.gradle.org/distributions/gradle-8.10.2-bin.zip -o /tmp/gradle.zip
           sudo unzip -q /tmp/gradle.zip -d /opt/gradle
-          echo "/opt/gradle/gradle-8.11.1/bin" >> $GITHUB_PATH
+          echo "/opt/gradle/gradle-8.10.2/bin" >> $GITHUB_PATH
 
       - name: Create Android WebView wrapper
         run: |
@@ -57,7 +57,7 @@ jobs:
           pluginManagement {
               repositories {
                   mavenCentral()
-                  maven { url = uri("https://dl.google.com/dl/android/maven2/") }
+                  google()
                   maven { url = uri("https://maven.google.com/") }
               }
           }
@@ -65,7 +65,7 @@ jobs:
           dependencyResolutionManagement {
               repositories {
                   mavenCentral()
-                  maven { url = uri("https://dl.google.com/dl/android/maven2/") }
+                  google()
                   maven { url = uri("https://maven.google.com/") }
               }
           }
@@ -175,6 +175,8 @@ jobs:
               }
           
               kotlinOptions {
+                  languageVersion = "2.0"
+                  apiVersion = "2.0"
                   jvmTarget = "17"
               }
           
