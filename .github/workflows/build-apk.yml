@@ -36,11 +36,11 @@ jobs:
           build-tools-version: 34.0.0
           platforms: android-34
 
-      - name: Install Gradle 8.11.1
+      - name: Install Gradle 7.6
         run: |
-          curl -sL https://services.gradle.org/distributions/gradle-8.10.2-bin.zip -o /tmp/gradle.zip
+          curl -sL https://services.gradle.org/distributions/gradle-7.6-bin.zip -o /tmp/gradle.zip
           sudo unzip -q /tmp/gradle.zip -d /opt/gradle
-          echo "/opt/gradle/gradle-8.10.2/bin" >> $GITHUB_PATH
+          echo "/opt/gradle/gradle-7.6/bin" >> $GITHUB_PATH
 
       - name: Create Android WebView wrapper
         run: |
@@ -52,26 +52,52 @@ jobs:
           # Copy web build to assets
           cp -r dist/* android/app/src/main/assets/
           
-          # Create settings.gradle.kts with pluginManagement
+          # Create settings.gradle.kts
           cat > android/settings.gradle.kts << 'EOF'
           pluginManagement {
               repositories {
-                  mavenCentral()
                   google()
-                  maven { url = uri("https://maven.google.com/") }
+                  mavenCentral()
+                  gradlePluginPortal()
               }
           }
           
           dependencyResolutionManagement {
               repositories {
-                  mavenCentral()
                   google()
-                  maven { url = uri("https://maven.google.com/") }
+                  mavenCentral()
+                  maven { url 'https://maven.google.com' }
               }
           }
           
           rootProject.name = "SmsFinanceWeb"
           include(":app")
+          EOF
+          
+          # Create root build.gradle.kts using old-style buildscript block
+          cat > android/build.gradle.kts << 'EOF'
+          buildscript {
+              repositories {
+                  google()
+                  mavenCentral()
+              }
+              dependencies {
+                  classpath("com.android.tools.build:gradle:7.4.2")
+                  classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.10")
+              }
+          }
+          
+          allprojects {
+              repositories {
+                  google()
+                  mavenCentral()
+                  maven { url 'https://maven.google.com' }
+              }
+          }
+          
+          tasks.register("clean", Delete::class) {
+              delete(rootProject.buildDir)
+          }
           EOF
           
           # Create AndroidManifest.xml
@@ -140,7 +166,7 @@ jobs:
           </paths>
           EOF
           
-          # Create app build.gradle.kts
+          # Create app build.gradle.kts using old-style apply plugin
           cat > android/app/build.gradle.kts << 'EOF'
           apply(plugin = "com.android.application")
           apply(plugin = "org.jetbrains.kotlin.android")
@@ -159,11 +185,11 @@ jobs:
           
               buildTypes {
                   release {
-                      isMinifyEnabled = false
+                      minifyEnabled = false
                       proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
                   }
                   debug {
-                      isMinifyEnabled = false
+                      minifyEnabled = false
                   }
               }
           
@@ -173,13 +199,7 @@ jobs:
               }
           
               kotlinOptions {
-                  languageVersion = "2.0"
-                  apiVersion = "2.0"
                   jvmTarget = "17"
-              }
-          
-              buildFeatures {
-                  viewBinding = true
               }
           }
           
