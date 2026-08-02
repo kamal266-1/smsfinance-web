@@ -76,7 +76,6 @@ jobs:
           cat > android/build.gradle << 'EOF'
           buildscript {
               repositories {
-                  google()
                   mavenCentral()
                   maven { url "https://maven.google.com" }
               }
