@@ -173,8 +173,7 @@ jobs:
           buildscript {
               repositories {
                   mavenCentral()
-                  maven { setUrl("https://dl.google.com/dl/android/maven2/") }
-                  maven { setUrl("https://maven.google.com/") }
+                  maven { url = uri("https://dl.google.com/dl/android/maven2/") }
               }
               dependencies {
                   classpath("com.android.tools.build:gradle:8.3.0")
@@ -185,8 +184,8 @@ jobs:
           allprojects {
               repositories {
                   mavenCentral()
-                  maven { setUrl("https://dl.google.com/dl/android/maven2/") }
-                  maven { setUrl("https://maven.google.com/") }
+                  maven { url = uri("https://dl.google.com/dl/android/maven2/") }
+                  maven { url = uri("https://maven.google.com/") }
               }
           }
           
