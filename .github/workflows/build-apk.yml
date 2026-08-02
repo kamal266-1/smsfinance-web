@@ -164,8 +164,8 @@ jobs:
           </paths>
           EOF
           
-          # Create app build.gradle.kts
-          cat > android/app/build.gradle.kts << 'EOF'
+          # Create app build.gradle (Groovy DSL)
+          cat > android/app/build.gradle << 'EOF'
           apply plugin: 'com.android.application'
           apply plugin: 'org.jetbrains.kotlin.android'
           
