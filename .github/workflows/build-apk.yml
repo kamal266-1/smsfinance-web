@@ -168,11 +168,24 @@ jobs:
           }
           EOF
           
-          # Create project build.gradle.kts
+          # Create project build.gradle.kts with Google repository and stable AGP
           cat > android/build.gradle.kts << 'EOF'
-          plugins {
-              id("com.android.application") version "8.4.1" apply false
-              id("org.jetbrains.kotlin.android") version "1.9.24" apply false
+          buildscript {
+              repositories {
+                  google()
+                  mavenCentral()
+              }
+              dependencies {
+                  classpath("com.android.tools.build:gradle:8.3.0")
+                  classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.24")
+              }
+          }
+          
+          allprojects {
+              repositories {
+                  google()
+                  mavenCentral()
+              }
           }
           
           tasks.register("clean", Delete::class) {
